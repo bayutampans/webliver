@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prediksi Penyakit Liver</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        background-color: #effafd;
+      }
+      .container {
+        max-width: 600px;
+        background: #96c2db;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #a0006d;
+        margin-top: 50px;
+      }
+      .result {
+        font-weight: bold;
+        font-size: 20px;
+        text-align: center;
+        margin-top: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2 class="text-center">Prediksi Penyakit Liver</h2>
+      <form id="prediction-form">
+        <div class="mb-3">
+          <label for="age" class="form-label">Usia</label>
+          <input type="number" class="form-control" id="age" required />
+        </div>
+        <div class="mb-3">
+          <label for="gender" class="form-label"
+            >Jenis Kelamin (0: Wanita, 1: Pria)</label
+          >
+          <input type="number" class="form-control" id="gender" required />
+        </div>
+        <div class="mb-3">
+          <label for="bmi" class="form-label">BMI (Range: 15 to 40)</label>
+          <input
+            type="number"
+            step="0.1"
+            class="form-control"
+            id="bmi"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="alcohol" class="form-label"
+            >Konsumsi Alkohol (Range: 0 to 20 units per week)</label
+          >
+          <input
+            type="number"
+            step="0.1"
+            class="form-control"
+            id="alcohol"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="smoking" class="form-label"
+            >Merokok (0: Tidak, 1: Ya)</label
+          >
+          <input type="number" class="form-control" id="smoking" required />
+        </div>
+        <div class="mb-3">
+          <label for="genetic" class="form-label"
+            >Risiko Genetik (0: Rendah, 1: Tinggi)</label
+          >
+          <input type="number" class="form-control" id="genetic" required />
+        </div>
+        <div class="mb-3">
+          <label for="activity" class="form-label"
+            >Aktivitas Fisik (Range: 0 to 10 hours per week)</label
+          >
+          <input
+            type="number"
+            step="0.1"
+            class="form-control"
+            id="activity"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="diabetes" class="form-label"
+            >Diabetes (0: Tidak, 1: Ya)</label
+          >
+          <input type="number" class="form-control" id="diabetes" required />
+        </div>
+        <div class="mb-3">
+          <label for="hypertension" class="form-label"
+            >Hipertensi (0: Tidak, 1: Ya)</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="hypertension"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="liverTest" class="form-label"
+            >Tes Fungsi Liver (Range: 20 to 100)</label
+          >
+          <input
+            type="number"
+            step="0.1"
+            class="form-control"
+            id="liverTest"
+            required
+          />
+        </div>
+        <button type="button" class="btn btn-primary w-100" onclick="predict()">
+          Prediksi
+        </button>
+      </form>
+      <div class="result mt-3" id="result"></div>
+    </div>
+
+    <script>
+      function predict() {
+        const data = {
+          age: parseInt(document.getElementById("age").value),
+          gender: parseInt(document.getElementById("gender").value),
+          bmi: parseFloat(document.getElementById("bmi").value),
+          alcohol: parseFloat(document.getElementById("alcohol").value),
+          smoking: parseInt(document.getElementById("smoking").value),
+          genetic: parseInt(document.getElementById("genetic").value),
+          activity: parseFloat(document.getElementById("activity").value),
+          diabetes: parseInt(document.getElementById("diabetes").value),
+          hypertension: parseInt(document.getElementById("hypertension").value),
+          liverTest: parseFloat(document.getElementById("liverTest").value),
+        };
+
+        fetch("https://backend-api-url.com/predict", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("result").innerText =
+              "Hasil: " + data.prediction;
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+    </script>
+  </body>
+</html>
