@@ -139,7 +139,7 @@
           liverTest: parseFloat(document.getElementById("liverTest").value),
         };
 
-        fetch("https://backend-api-url.com/predict", {
+        fetch("https://webliver.versel.app/predict", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
